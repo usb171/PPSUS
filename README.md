@@ -1,4 +1,4 @@
-#Preparando o ambiente de desenvolvimento.
+# Preparando o ambiente de desenvolvimento.
 
 Instalar o Linux Mint 19 Cinnamon 64 bits
 
