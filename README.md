@@ -1,6 +1,4 @@
-# PPSUS - Aplicação do Avaliador 
-
-Preparando o ambiente de desenvolvimento.
+# PPSUS - Preparando o ambiente de desenvolvimento.
 
 Instalar o Linux Mint 19 Cinnamon 64 bits
 
