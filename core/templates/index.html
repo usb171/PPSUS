@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <title>MoreMoney</title>
+    <!-- Materialize css -->
+    <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/material-icons.css' %}">
+
+  </head>
+  <body>
+
+    <!--NavBar-->
+    <div class="navbar-fixed">
+      <nav class=" blue-grey darken-4 z-depth-2">
+          <div class="nav-wrapper">
+            <a href="#"class="brand-logo center">
+              {% if user.avaliador.dispositivo %}
+              <span id="header-large" class="text-logo">  {{ user }} / {{user.avaliador.dispositivo.codigo}} </span>
+              {% else %}
+              <span id="header-large" class="text-logo">  {{ user }} / --- </span>
+              {% endif %}
+
+            <a href="#" data-activates="menu-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+          </div>
+      </nav>
+    </div>
+    <ul class="side-nav" id="menu-mobile">
+      {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Sair</a></li>
+        <!-- <li><a href="#">Editar minha conta</a></li> -->
+      {% else %}
+        <li><a href="{% url 'login' %}">Entrar</a></li>
+      {% endif %}
+    </ul>
+    <!--NavBar-->
+
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <ul class="collapsible" data-collapsible="accordion">
+
+          <li>
+            <div class="collapsible-header"><i class="material-icons">list</i>Exame</div>
+            <div id="dispositivo" class="collapsible-body">
+              <div class="collection">
+                <a href="{% url 'novoExame' %}" class="collection-item center">Exames</a>
+                {% if  user.get_username == "root" %}
+                  <a href="{% url 'novoTipoExame' %}" class="collection-item center">Novo Tipo de Exame</a>
+                {% endif %}
+                <a href="{% url 'novaFicha' %}" class="collection-item center">Nova Coleta</a>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <div class="collapsible-header"><i class="material-icons">list</i>Paciente</div>
+            <div id="dispositivo" class="collapsible-body">
+              <div class="collection">
+               <a href="{% url 'novoPaciente' %}" class="collection-item center">Novo Paciente</a>
+               <a href="{% url 'editarPaciente' %}" class="collection-item center">Editar Paciente</a>
+               <a href="{% url 'deletarPaciente' %}" class="collection-item center">Deletar Paciente</a>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <div class="collapsible-header"><i class="material-icons">list</i>Dispositivo</div>
+            <div id="dispositivo" class="collapsible-body">
+              <div class="collection">
+                <a class="modal-trigger collection-item center" href="#modal_dispositivo">Dispositivo</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="modal_dispositivo" class="modal modal-fixed-footer">
+      <div class="modal-content row">
+        <form class="col s12 m12 l12"  method="POST" id="id_form_select_device">
+          {% csrf_token %}
+          {% if not user.avaliador.dispositivo %}
+            <hr><h5 class="grey-text text-darken-1 center">Escolha um Dispositivo</h5><hr></br>
+            <div class="input-field col s12">
+              <select id="dispositivo" name="dispositivo">
+                <!-- <option value="" disabled selected></option> -->
+                {% for d in dispositivos %}
+                  <option value="{{d.codigo}}">{{d.nome}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+            <div class="modal-footer">
+              <button class="waves-effect waves-light btn z-depth-3 modal-close" type="submit" name="action">Salvar</button>
+            </div>
+          {% endif %}
+        </form>
+        {% if user.avaliador.dispositivo %}
+          <hr><h5 class="grey-text text-darken-1 center">Devolver {{user.avaliador.dispositivo.codigo}} ?</h5><hr></br>
+          </br>
+          <a href="{% url 'devolverDispositivo' %}" class="waves-effect waves-light btn z-depth-3 modal-close larg col s12 m12 l12">Sim</a>
+          </br></br></br></br>
+          <button class="waves-effect waves-light btn red accent-4 z-depth-3 modal-close larg col s12 m12 l12">Não</button>
+        {% endif %}
+  </div>
+
+    <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+    <script src="{% static 'js/materialize.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <script>
+
+      $( function(){
+
+        $('#id_form_select_device').submit(function(e){
+          e.preventDefault();
+          $.post('{% url "selecionarDispositivo" %}', $(this).serialize(), function(data){
+            console.log(data);
+
+            if(data.ok){
+              $(location).attr('href', "{% url 'index' %}")
+            }else{
+              Materialize.toast("Erro ao Selecionar Dispositivo", 4000);
+            }
+
+
+          }, 'json');
+
+        });
+
+      });
+
+    </script>
+
+
+  </body>
+</html>

@@ -1,0 +1,106 @@
+{% extends 'base_paciente.html' %}
+{% block body %}
+
+  <div class="navbar-fixed">
+      <nav class=" blue-grey darken-4 z-depth-2">
+          <div class="nav-wrapper">
+            <a href="#"class="brand-logo center">
+                <span id="header-large" class="text-logo"> Editar Paciente </span>
+            <a href="#" data-activates="menu-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+          </div>
+      </nav>
+  </div>
+  <ul class="side-nav" id="menu-mobile">
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'novoPaciente' %}">Novo Paciente</a></li>
+    </ul>
+  <!--NavBar-->
+
+  <div class="row">
+     <form class="col s12 m12 l12" acticon="{% url 'index' %}" method="POST">
+      {% csrf_token %}
+      <div class="row card-panel black-text">
+        <div class="input-field col s12 m12 l12">
+          <i class="material-icons prefix">search</i>
+          <input placeholder="" id="autocomplete-input" name="nomeCompletoCodeNome" type="text" class="autocomplete" autofocus required>
+          <label for="autocomplete-input">BUSCAR: Nome ou CPF</label>
+          <input placeholder="" id="id_code_NomeCompleto" type="hidden" name="code_nomeCompleto"  value="{{context.code_nomeCompleto}}" readonly>
+        </div>
+      </div>
+      <div class="row card-panel black-text">
+        <div class="input-field col s12 m12 l12">
+           <i class="material-icons prefix">account_circle</i>
+           <input placeholder="" id="id_nomeCompleto" name="nomeCompleto" value="{{form.nomeCompleto.value}}" type="text" class="validate" autofocus required>
+           <label for="id_nomeCompleto" data-success="OK">Nome completo</label>
+           {% if form.nomeCompleto.errors %}
+           <blockquote>
+           {{ form.nomeCompleto.errors }}
+           </blockquote>
+           {% endif %}
+         </div>
+        <div class="input-field col s12 m12 l12">
+           <i class="material-icons prefix">wc</i>
+           <select id="id_sexo", name="sexo">
+               <option value="" disabled selected>Escolha um sexo</option>
+               <option value="masculino">Masculino</option>
+               <option value="femenino">Feminino</option>
+           </select>
+            {% if form.sexo.errors %}
+            <blockquote>
+            Sexo: {{ form.sexo.errors }}
+            </blockquote>
+            {% endif %}
+         </div>
+        <div class="input-field col s12 m12 l12">
+            <i class="material-icons prefix">fitness_center</i>
+            <input placeholder="" id="id_peso" name="peso" value="{{form.peso.value}}"type="number" onblur="get_peso()" required>
+            <label for="id_peso">Peso</label>
+            {% if form.peso.errors %}
+            <blockquote>
+            Peso: {{ form.peso.errors }}
+            </blockquote>
+            {% endif %}
+         </div>
+        <div class="input-field col s12 m12 l12">
+           <i class="material-icons prefix">format_list_numbered</i>
+           <input placeholder="" id="id_altura" name="altura" value="{{form.altura.value}}"type="number" onblur="calc_imc()">
+           <label for="id_peso">Altura</label>
+         </div>
+        <div class="input-field col s12 m12 l12">
+           <i class="material-icons prefix">queue</i>
+           <input placeholder="" id="id_IMC" name="IMC" value="{{form.IMC.value}}"type="number" readonly>
+           <label for="id_IMC">IMC</label>
+         </div>
+      </div>
+      <div class="row card-panel black-text">
+        <div class="input-field col s12 m12 l12">
+           <i class="material-icons prefix">credit_card</i>
+           <input placeholder="" id="id_cpf" name="cpf" value="{{form.cpf.value}}" maxlength="11" class="validate" autofocus required>
+           <label class="active" for="id_cpf" data-error="Somente Números" data-success="OK">CPF</label>
+        </div>
+        <div class="input-field col s12 m12 l12">
+           <i class="material-icons prefix">phone</i>
+           <input placeholder="" id="id_telefone" name="telefone" value="{{form.telefone.value}}" maxlength="11" class="validate">
+           <label class="active" for="id_telefone" data-error="Telefône Inválido" data-success="OK">Telefone</label>
+         </div>
+        <div class="input-field col s12 m12 l12">
+           <i class="material-icons prefix">perm_contact_calendar</i>
+           <input placeholder="" type="text" id="id_dataNascimento" name="dataNascimento" value="{{form.dataNascimento.value}}" class="datepicker">
+           <label for="id_dataNascimento">Data de Nascimento</label>
+        </div>
+        <div class="input-field col s12 m12 l12">
+           <i class="material-icons prefix">textsms</i>
+           <input placeholder="" type="text" id="id_observacao" name="observacao" value="{{form.observacao.value}}" data-length="120">
+           <label for="id_observacao">Observação</label>
+         </div>
+      </div>
+      <div class="col s12 m12 l12 center">
+        <button type="submit" class="waves-effect waves-light btn-large blue-grey darken-2">Salvar</button>
+        <div class="section"></div>
+      </div>
+    </form>
+  </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,330 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link rel="stylesheet" href="{% static 'css/material-icons.css' %}">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/video.css' %}"> -->
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    {% block head %}
+    <title>FAPEPI </title>
+    {% endblock %}
+  </head>
+
+  <body>
+    <!-- <body onbeforeunload="return load()"> -->
+
+    {% block body %}
+    {% endblock %}
+
+    <!--Import jQuery before materialize.js-->
+    <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+    <script src="{% static 'js/materialize.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <script>
+
+      var dic_fields_laudo = {
+        'pontuacao':false,
+        'cronometro': false,
+        'observacao': false,
+        'risco_queda': false,
+        'deslocamento':false,
+        'pontuacao_soma': false,
+        'coleta_dispositivo': false, // Flag de controle entre coleta com ou sem dispositivo
+        'pontuacao_minima': 0,
+        'pontuacao_maxima': 0,
+      };
+
+      var dic_cronometro = {
+        'segundo': 0+"1",
+        'minuto': 0+"0",
+        'timer': 0,
+      }
+
+      var dic_laudo = {
+        'redirect':"{% url 'index' %}",
+        'flag_redirect':false,
+      }
+
+      function load() {
+          return "";
+      }
+
+      function get_dic_pacientes(){
+        var dic_paciente = {};
+        {% for p in pacientes %}
+          var key = "{{p}}"
+          if("{{p.code_nomeCompleto}}" != 0){
+            key = "{{p}}"+"({{p.code_nomeCompleto}})";
+          }
+          var key_cpf = "{{p.cpf}}"
+          dic_paciente[key] = null;
+          dic_paciente[key_cpf] = "{% static 'img/003.png' %}";
+        {% endfor %}
+        return dic_paciente;
+      }
+
+      function get_dic_exames(){
+        var dic_tipo_exame = {};
+
+        {% for t_e in nome_exames %}
+         var key = "{{t_e}}";
+         dic_tipo_exame[key] = null;
+        {% endfor %}
+        return dic_tipo_exame;
+      }
+
+      function start_cronometro(){
+        if (dic_cronometro['segundo'] < 59){
+          dic_cronometro['segundo']++;
+          if(dic_cronometro['segundo'] < 10) dic_cronometro['segundo'] = "0"+dic_cronometro['segundo'];
+        }else
+          if(dic_cronometro['segundo'] == 59 && dic_cronometro['minuto'] < 59){
+            dic_cronometro['segundo'] = 0+"0";
+            dic_cronometro['minuto']++;
+            if(dic_cronometro['minuto'] < 10) dic_cronometro['minuto'] = "0"+dic_cronometro['minuto'];
+          }
+        document.getElementById("id_cronometro").innerHTML = dic_cronometro['minuto'] +":"+ dic_cronometro['segundo'];
+        document.getElementById("id_cronometro_laudo").value = dic_cronometro['minuto'] +":"+ dic_cronometro['segundo'];
+      }
+
+      function stop_cronometro(){
+        clearInterval(dic_cronometro['timer']);
+        dic_cronometro['segundo'] =  0+"1"
+        dic_cronometro['minuto'] = 0+"0"
+        dic_cronometro['timer'] = 0
+      }
+
+      function show_fields_laudo(){
+        if (dic_fields_laudo['pontuacao']) $("#id_div_field_pontuacao").fadeIn(1500)
+        if (dic_fields_laudo['pontuacao_soma']) $("#id_div_field_pontuacao_soma").fadeIn(1500)
+        if (dic_fields_laudo['observacao']) $("#id_div_field_observacao").fadeIn(1500)
+        if (dic_fields_laudo['cronometro']) $("#id_div_field_cronometro").fadeIn(1500)
+        if (dic_fields_laudo['risco_queda']) $("#id_div_field_risco_queda").fadeIn(1500)
+        if (dic_fields_laudo['deslocamento']) $("#id_div_field_deslocamento").fadeIn(1500)
+       // if (dic_fields_laudo['coleta_dispositivo']) $("#id_div_field_deslocamento").fadeIn(1500)
+      }
+
+      function hidden_clear_all(){
+        $("#id_div_field_pontuacao").fadeOut(1500)
+        $("#id_div_field_observacao").fadeOut(1500)
+        $("#id_div_field_cronometro").fadeOut(1500)
+        $("#id_div_field_risco_queda").fadeOut(1500)
+        $("#id_div_field_deslocamento").fadeOut(1500)
+       // $("#id_div_field_deslocamento").fadeOut(1500)
+        $("#id_div_field_pontuacao_soma").fadeOut(1500)
+
+        document.getElementById("id_pontuacao").value = '-';
+        document.getElementById("id_observacao").value = '';
+        document.getElementById("id_deslocamento").value = '';
+        document.getElementById("id_pontuacao_soma").value = '';
+        document.getElementById("id_field_risco_queda").value = '-----';
+
+        // Esconde todos os buttons
+        $("#id_div_button_parar_coleta").fadeOut(1500);
+        $("#id_div_button_salvar_laudo").fadeOut(1500);
+        $("#id_div_button_iniciar_coleta").fadeOut(1500);
+        // Esconde todos os buttons
+
+        $("#id_div_laudo_paciente").fadeOut(1500);
+        // $("#id_div_dados_paciente").fadeOut();
+        // $("#id_div_dados_tipoExame").fadeOut();
+
+      }
+
+
+      $(function(){
+
+        $('#id_form_coleta').submit(function(e){
+          // $("button").prop("disabled",true); // Evita mult-clicks
+          e.preventDefault();
+          $.post('{% url "novaFicha" %}', $(this).serialize(), function(data){
+            if (data.ok){
+              console.log("voltei aqui");
+            }else{
+              console.log(data);
+              Materialize.toast(data.msg, 4000);
+              if(data.focus == 1){ document.getElementById("search_tipo_exame").focus();}
+              if(data.focus == 2){ document.getElementById("search_paciente").focus();}
+            }
+          }, 'json');
+        });
+
+        // Busca *********************************
+        $('input.search_paciente').autocomplete({
+           data: get_dic_pacientes(),
+           limit: 5,
+           onAutocomplete:function(val){
+             $.ajax({
+               url: '../get_dados_paciente/',
+               data: {
+                 'paciente_search': val
+               },
+               dataType: 'json',
+               success: function(data){
+                  $("#id_div_button_salvar_laudo button").prop("disabled", false); // Ativa o button (Evita double cliks)
+                  $("#id_div_dados_paciente").fadeIn(1500) // Mostra a div dos dados do paciente
+                  document.getElementById("paciente").value = data.id;
+                  document.getElementById("id_nomeCompleto").value = data.nomeCompleto;
+                  document.getElementById("id_cpf").value = data.cpf;
+                  document.getElementById("id_dataNascimento").value = data.dataNascimento;
+               }
+              });
+            },
+            minLength: 1,
+          });
+        $('input.search_tipo_exame').autocomplete({
+           data: get_dic_exames(),
+           limit: 10,
+           onAutocomplete:function(val){
+             $.ajax({
+               url: '../get_dados_tipo_exame/',
+               data: {
+                 'tipoExame_search': val
+               },
+               dataType: 'json',
+               success: function(data){
+
+                  $("#id_div_button_iniciar_coleta button").prop("disabled", false); // Ativa o button (Evita double cliks)
+                  $("#id_div_button_parar_coleta button").prop("disabled", false); // Ativa o button (Evita double cliks)
+                  $("#id_div_button_salvar_laudo button").prop("disabled", false); // Ativa o button (Evita double cliks)
+
+                  document.getElementById("id_cronometro").innerHTML = "00:00"
+                  $("#id_div_dados_tipoExame").fadeIn(1500) // Mostra a div com os dados do tipo do exame
+                  document.getElementById("tipoExame").value = data.id;
+                  document.getElementById("id_tipoExame").value = data.nomeExame;
+
+                  dic_fields_laudo['pontuacao_soma'] = data.pontuacao_soma;
+                  dic_fields_laudo['pontuacao'] = data.pontuacao;
+                  dic_fields_laudo['cronometro'] = data.cronometro;
+                  dic_fields_laudo['observacao'] = data.observacao;
+                  dic_fields_laudo['risco_queda'] = data.risco_queda;
+                  dic_fields_laudo['deslocamento'] = data.deslocamento;
+                  dic_fields_laudo['coleta_dispositivo'] = data.coleta_dispositivo;
+                  dic_fields_laudo['pontuacao_minima'] = parseInt(data.pontuacao_minima);
+                  dic_fields_laudo['pontuacao_maxima'] = parseInt(data.pontuacao_maxima);
+
+
+                  hidden_clear_all(); // Esconde tudo
+
+                  if(dic_fields_laudo['coleta_dispositivo']){
+                    $("#id_div_button_iniciar_coleta").fadeIn(1500);
+                  }else{
+                    $("#id_div_laudo_paciente").fadeIn(1500);
+                    $("#id_div_button_salvar_laudo").fadeIn(1500);
+                    show_fields_laudo(); // Exibe todos os campos do laudo do tipo do exame
+                  }
+
+
+                  document.getElementById("id_descricao_tipo_exame").innerHTML =  data.descricaoExame;
+                  //document.getElementById("id_cronometro").innerHTML = "00:03";
+
+                  $('#id_pontuacao').empty()
+                  for(var i = dic_fields_laudo['pontuacao_minima']; i <= dic_fields_laudo['pontuacao_maxima']; i++){
+                    $('#id_pontuacao').append('<option value="'+ i +'">'+i+'</option>');
+                  }
+                  $('select').material_select();
+
+               }
+              });
+            },
+            minLength: 1,
+         });
+        // Busca ***********************************
+
+        //Form novaFicha ********************************************************************
+        $('#id_form_novaFicha').submit(function(e){
+          e.preventDefault();
+          console.log("SALVANDO LAUDO ...");
+          $.post('{% url "novaFicha" %}', $(this).serialize(), function(data){
+            if (data.ok ){
+              Materialize.toast(data.msg + " Escolha o próximo exame.", 7000);
+              hidden_clear_all();
+              document.getElementById("search_tipo_exame").focus();
+              $("#id_div_dados_tipoExame").fadeOut(1500);
+              $("#id_div_laudo_paciente").fadeOut(1500);
+            }else{
+              Materialize.toast(data.msg, 4000);
+              document.getElementById("search_paciente").focus();
+              $("#id_div_button_salvar_laudo button").prop("disabled", false); // Ativa o button (Evita double cliks)
+
+            }
+          }, 'json');
+        });
+        //Form Laudo ************************************************************************
+
+        // buttons **************************************************
+        $("#id_div_button_salvar_laudo button").click(function (ev) {
+          ev.preventDefault()
+          $("#id_form_novaFicha").submit();
+          $("#id_div_busca_paciente_tipoExame").fadeIn(1500)
+          $(this).prop("disabled", true); // Desativa o button (Evita double cliks)
+        });
+        $("#id_div_button_iniciar_coleta button").click(function (ev) {
+          ev.preventDefault()
+          $(this).prop("disabled", true); // Desativa o button (Evita double cliks)
+          $.get('{% url "iniciarColeta" %}', {}, function(data) {
+              if(data.ok){
+                console.log(data);
+                Materialize.toast(data.msg, 5000);
+
+                dic_cronometro['timer'] = setInterval('start_cronometro()',983);
+                $("#id_div_field_cronometro").fadeIn(1500)
+                $("#id_carregando_bar").fadeIn(1500)
+                $("#id_div_button_parar_coleta").fadeIn(1500);
+                $("#id_div_button_iniciar_coleta").fadeOut(1500);
+                $("#id_div_busca_paciente_tipoExame").fadeOut(1500);
+
+              }else{
+                Materialize.toast("Dispositivo Disconectado, RESETE O APARELHO!!!", 10000);
+                // $(this).prop("disabled", false); // Desativa o button (Evita double cliks)
+              }
+          });
+        });
+        $("#id_div_button_parar_coleta button").click(function (ev) {
+          ev.preventDefault()
+          $(this).prop("disabled", true); // Desativa o button (Evita double cliks)
+          stop_cronometro();
+          $("#id_div_dados_paciente").fadeOut(1500)
+          $("#id_div_laudo_paciente").fadeOut(1500)
+          $("#id_div_dados_tipoExame").fadeOut(1500)
+
+          $("#id_carregando_bar").fadeOut(1500)
+          $("#id_div_carregando_amostrar").fadeIn(1500)
+          $("#id_div_button_parar_coleta").fadeOut(1500)
+          $("#id_div_busca_paciente_tipoExame").fadeOut(1500)
+          Materialize.toast("Carregando Amostras", 10000);
+
+          $.get('{% url "finalizarColeta" %}', {}, function(data) {
+            if(data.ok){
+              $("#id_div_carregando_amostrar").fadeOut(1500)
+              Materialize.toast(data.msg, 10000);
+              $("#id_div_dados_paciente").fadeIn(1500)
+              $("#id_div_laudo_paciente").fadeIn(1500)
+              $("#id_div_dados_tipoExame").fadeIn(1500)
+              show_fields_laudo()
+              $("#id_div_button_salvar_laudo").fadeIn(1500)
+            }else{
+              $(this).prop("disabled", false); // Desativa o button (Evita double cliks)
+            }
+
+         });
+
+
+        });
+        // buttons **************************************************
+
+
+
+      });
+   </script>
+  </body>
+</html>

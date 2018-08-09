@@ -1,0 +1,240 @@
+{% extends 'base_coleta.html' %}
+{% block body %}
+
+  <div class="navbar-fixed">
+    <nav class=" blue-grey darken-4 z-depth-2">
+        <div class="nav-wrapper">
+          <a href="#"class="brand-logo center">
+              <span id="header-large" class="text-logo"> Nova Coleta </span>
+          <a href="#" data-activates="menu-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+        <div class="progress" >
+          <div class="indeterminate" id="id_carregando_bar" hidden></div>
+        </div>
+    </nav>
+  </div>
+  <ul class="side-nav" id="menu-mobile">
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'novoExame' %}">Buscar Exame</a></li>
+      <li><a href="{% url 'novaColeta' %}">Nova Coleta</a></li>
+  </ul>
+  <!--NavBar-->
+
+  <form class="col s12 m12 l12"  method="POST" id="id_form_coleta">
+    {% csrf_token %}
+    <!-- Div contendo os ids dos campos paciente e tipo exame -->
+    <div class="row" hidden>
+      <div class="input-field col s6 m6 l6">
+        <input placeholder="" id="paciente" type="hidden" name="paciente"  value="{{context.nomeCompleto}}" readonly>
+      </div>
+      <div class="input-field col s6 m6 l6">
+        <input placeholder="" id="tipoExame" type="hidden" name="tipoExame"  value="{{context.tipoExame}}" readonly >
+      </div>
+    </div>
+    <!-- Div contendo os ids dos campos paciente e tipo exame -->
+    <div class="grey lighten-5">
+      <!-- Essa div contém todos os campos de busca para montar uma ficha de exames -->
+      <div class="row" id="id_div_busca">
+        <div class="col s12 m12 l12">
+          <div class="card">
+            <div class="card-content white-text">
+              <!-- Campo de busca de Paciente -->
+              {% if user.avaliador.dispositivo %}
+                <div class="row">
+                  <div class="input-field col s12 m12 l12">
+                    <!-- <i class="material-icons prefix" style="color:#26a69a">accessibility</i> -->
+                    <input placeholder="" id="search_paciente" name="search_paciente" value="{{context.nomeCompleto}}" type="text" class="search_paciente grey-text text-darken-4" autofocus required>
+                    <label for="search_paciente">BUSCAR: Nome ou CPF</label>
+                  </div>
+                </div>
+                <!-- Campo de busca de Paciente -->
+                <!-- Campo de busca tipoExame -->
+                <div class="row">
+                  <div class="input-field col s12 m12 l12">
+                    <!-- <i class="material-icons prefix" style="color:#26a69a">add_to_queue</i> -->
+                    <input placeholder="" id="search_tipo_exame" name="search_tipo_exame" value="{{context.tipoExame}}" type="text" class="search_tipo_exame grey-text text-darken-4" required>
+                    <label for="search_tipo_exame">Buscar Exame</label>
+                  </div>
+                </div>
+                <!-- Campo de busca tipoExame -->
+                <div class="section"/>
+
+                <center>
+                  <button id="id_button_gerar_ficha" class="waves-effect waves-light btn z-depth-3" type="submit" value="gerar_ficha" name="action">Gerar Ficha</button>
+                </center>
+              {% else %}
+                <a href="{% url 'index' %}">
+                  <h4 class="Blue-text center" >Selecione um dispositivo</h4>
+                </a>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Essa div contém todos os campos de busca para montar uma ficha de exames -->
+    </div>
+  </form>
+
+  <!-- Essa div contem os campos do laudo do paciente -->
+  <div class="row" id="id_div_ficha_exame" hidden>
+    <form class="col s12 m12 l12" method="POST" id="id_form_laudo">
+      {% csrf_token %}
+      <input placeholder="" id="id_coleta_id" type="hidden" name="coleta_id">
+      <div class="card">
+        <div class="card-content white-text">
+          <hr><h5 class="grey-text text-darken-1 center"> Ficha do Paciente</h5><hr></br>
+          <div class="row">
+            <div class="input-field col s12 m12 l12">
+              <input placeholder="" id="id_nomeCompleto" name="nomeCompleto" type="text" disabled>
+              <label for="id_nomeCompleto">Nome completo</label>
+            </div>
+            <div class="input-field col s12 m12 l12">
+              <input placeholder="" id="id_cpf" name="cpf" type="text" disabled>
+              <label for="id_telefone">CPF</label>
+            </div>
+            <div class="input-field col s12 m12 l12">
+              <input placeholder="" id="id_dataNascimento" name="dataNascimento" type="text" disabled>
+              <label for="id_dataNascimento">Data de Nascimento</label>
+            </div>
+            <div class="input-field col s12 m12 l12">
+              <input placeholder="" id="id_tipoExame" name="tipoExame" type="text" disabled>
+              <label for="id_tipoExame">Tipo Exame</label>
+            </div>
+            <div class="col s12 m12 l12 center">
+              <span class="grey-text text-darken-1" id="id_descricao_tipo_exame"></span>
+              <div class="section" id="id_div_field_cronometro" hidden>
+                <span class="grey-text text-darken-1" id="id_cronometro" style="width:300px; height:100px; line-height:100px; font-size:75px; border:none;"></span>
+              </div>
+            </div>
+
+            <div class="input-field col s12 m12 l12 grey-text text-darken-1 " hidden>
+              <input id="id_cronometro_laudo" type="text" name="cronometro" value="00:00" readonly>
+              <label for="id_cronometro_laudo" class="active" >Cronômetro</label>
+            </div>
+
+          </div>
+          <div class="row" id="id_div_laudo_paciente" hidden>
+            <hr><h5 class="grey-text text-darken-1 center"> Laudo do Paciente</h5><hr></br>
+            <div class="input-field col s12 m12 l12" id="id_div_field_observacao" hidden>
+              <textarea id="id_observacao" name="observacao" data-length="120" class="materialize-textarea grey-text text-darken-4"></textarea>
+              <label for="id_observacao" class="active" >Observação</label>
+            </div>
+            <div class="input-field col s12 m12 l12 grey-text text-darken-4" id="id_div_field_deslocamento" hidden>
+              <input placeholder="" id="id_deslocamento" name="deslocamento" type="number" value=""></textarea>
+              <label for="id_deslocamento" class="active" >Deslocamento em cm</label>
+            </div>
+
+            <div class="input-field col s12 m12 l12 grey-text text-darken-4" id="id_div_field_pontuacao_soma" hidden>
+              <input placeholder="" id="id_pontuacao_soma" name="pontuacao_soma" type="number" value=""></textarea>
+              <label for="id_pontuacao_soma" class="active" >Pontuacao Soma</label>
+            </div>
+
+
+            <div class="input-field col s12 m12 l12" id="id_div_field_risco_queda" hidden>
+              <h6 class="grey-text text-darken-1 center"> Risco de Queda</h6>
+              </br>
+              <select class="grey-text text-darken-4" id="id_field_risco_queda" name="risco_queda" required>
+                  <option value="-----">Selecione um Risco</option>
+                  <option value="BAIXO">BAIXO risco de queda</option>
+                  <option value="MEDIO">MÉDIO risco de queda</option>
+                  <option value="ALTO">ALTO risco de queda</option>
+              </select>
+            </div>
+
+            <div class="input-field col s12 m12 l12" id="id_div_field_pontuacao" hidden>
+              <h6 class="grey-text text-darken-1 center">Pontuação</h6>
+              </br>
+              <select class="grey-text text-darken-4" id="id_pontuacao" name="pontuacao" required>
+                  <option value="-">-</option>
+              </select>
+            </div>
+            <div class="col s12 m12 l12">
+            </br></br>
+              <center>
+                <button id="id_button_salvar_laudo" class="waves-effect waves-light btn-large z-depth-3 " type="submit" value="salvar">Salvar Laudo</button>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- Essa div contem os campos do laudo do paciente -->
+
+  <div id="id_div_dispositivo_rec" hidden>
+    <form method="POST" id="id_form_mqtt_rec">
+      {% csrf_token %}
+      <center>
+        <button id="id_button_iniciar_coleta" class="waves-effect waves-light btn z-depth-3" type="submit" value="iniciar_coleta">Iniciar Coleta</button>
+      </center>
+      </br></br></br>
+   </form>
+  </div>
+
+  <div id="id_div_dispositivo_stop" hidden>
+    <form method="POST" id="id_form_mqtt_stop">
+      {% csrf_token %}
+      <center>
+        <button class="waves-effect waves-light btn yellow accent-4 grey-text text-darken-4 z-depth-3" type="submit" name="action">Parar Coleta</button>
+      </center>
+      </br></br></br>
+   </form>
+  </div>
+
+  <div id="id_div_carregando_amostrar" hidden>
+    <div class="section"/>
+    <div class="section"/>
+    <div class="section"/>
+    <div class="section"/>
+    <div class="section"/>
+    <h5 class="center">Carregando Amostras...</h5>
+    <div class="preloader-wrapper big active" style= "
+     position: absolute;
+     left: 50%;
+     top: 50%;
+     margin-left: -32px;
+     margin-top: -32px;">
+     <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+     </div>
+     <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+     <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+     <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% endblock %}

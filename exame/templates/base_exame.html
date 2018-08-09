@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link rel="stylesheet" href="{% static 'css/material-icons.css' %}">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    {% block head %}
+    <title>FAPEPI </title>
+    {% endblock %}
+  </head>
+
+  <body>
+    {% block body %}
+    {% endblock %}
+
+    <!--Import jQuery before materialize.js-->
+    <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+    <script src="{% static 'js/materialize.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <script>
+      $( function() {
+
+       $('select').material_select();
+       $('.collapsible').collapsible();
+
+       $('#id_form_editar_exame').submit(function(e){
+         e.preventDefault();
+         $.post('{% url "editarExame" %}', $(this).serialize(), function(data){
+           if (data.ok ){
+             $(location).attr("href","{% url 'novoExame' %}");
+           }else{
+             Materialize.toast(data.msg, 4000);
+           }
+         }, 'json');
+
+       });
+
+        var obj = {};
+        {% for p in pacientes %}
+          var key = "{{p}}"
+          if("{{p.code_nomeCompleto}}" != 0){
+            key = "{{p}}"+"({{p.code_nomeCompleto}})";
+          }
+          var key_cpf = "{{p.cpf}}"
+          obj[key] = null;
+          obj[key_cpf] ="{% static 'img/003.png' %}";
+        {% endfor %}
+
+       $('input.autocomplete').autocomplete({
+         data: obj,
+         limit: 8,
+         onAutocomplete:function(val){
+           $.ajax({
+             url: '../get_dados_exame/',
+             data: {
+               'paciente_search': val,
+             },
+             dataType: 'json',
+             success: function(data){
+
+               $('#id_lista_exames').fadeIn();
+              // Atenção! Esse jquery renderiza um input-field com o id do paciente ###############################################
+               $('#div_id_paciente').html('<input type="hidden" id="id_paciente" name="fk_paciente" value="'+data.id_paciente+'">')
+              // ##################################################################################################################
+               {% for t_e in tipo_exames %}
+                  try{
+                    $('#collapsible_header_{{t_e}}').html('<i class="material-icons">toc</i>{{ t_e }}<span class="badge">'+data.dic_exames.{{t_e}}.quantidade+'</span>')
+                    var linhas_tabela = '';
+                    for (i = 0; i < data.dic_exames.{{t_e}}.quantidade; i++){
+                      linhas_tabela += '<tr><td><a href="../detail/'+data.dic_exames.{{t_e}}.id_exame[i]+'">'+data.dic_exames.{{t_e}}.data_criacao[i]+'</a></td></tr>'
+                      console.log('../detail/'+data.dic_exames.{{t_e}}.id_exame[i]);
+                    }
+                    var code_table = '<table class="bordered"><tbody>'+linhas_tabela+'</tbody></table>'
+                    $('#div_{{t_e}}').html(code_table)
+
+                  }catch(e) {
+                    $('#collapsible_header_{{t_e}}').html('<i class="material-icons">toc</i>{{ t_e }}<span class="badge">0</span>');
+                    $('#div_{{t_e}}').html("Sem coletas")
+                  }
+               {% endfor %}
+             }
+            });
+          },
+          minLength: 1,
+       });
+
+      } );
+   </script>
+  </body>
+</html>

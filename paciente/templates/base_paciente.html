@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link rel="stylesheet" href="{% static 'css/material-icons.css' %}">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    {% block head %}
+    <title>FAPEPI </title>
+    {% endblock %}
+  </head>
+
+  <body>
+    {% block body %}
+    {% endblock %}
+
+    <!--Import jQuery before materialize.js-->
+    <script src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery-mask.min.js'%}"></script>
+    <script src="{% static 'js/materialize.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <script>
+
+      var peso = 0;
+      var altura = 0;
+
+      function get_peso(){
+        peso = document.getElementById('id_peso').value;
+        document.getElementById('id_IMC').value = (peso/(altura*altura));
+      }
+
+      function calc_imc(){
+        altura = document.getElementById('id_altura').value / 100;
+        document.getElementById('id_IMC').value = (peso/(altura*altura));
+      }
+
+      $(function() {
+         $('select').material_select();
+         var obj = {};
+         {% for p in pacientes %}
+           var key = "{{p}}"
+           if("{{p.code_nomeCompleto}}" != 0){
+             key = "{{p}}"+"({{p.code_nomeCompleto}})";
+           }
+           var key_cpf = "{{p.cpf}}"
+           obj[key] = null;
+           obj[key_cpf] = "{% static 'img/003.png' %}";
+         {% endfor %}
+
+         $('input.autocomplete').autocomplete({
+           data: obj,
+           limit: 8,
+           onAutocomplete:function(val){
+             $.ajax({
+               url: '../get_dados_paciente/',
+               data: {
+                 'paciente_search': val
+               },
+               dataType: 'json',
+                  success: function(data){
+                  console.log(data);
+                  document.getElementById("id_cpf").value = data.cpf;
+                  document.getElementById("id_IMC").value = data.IMC;
+                  document.getElementById("id_sexo").value = data.sexo;
+                  document.getElementById("id_peso").value = data.peso;
+                  document.getElementById("id_altura").value = data.altura;
+                  document.getElementById("id_telefone").value = data.telefone;
+                  document.getElementById("id_observacao").value = data.observacao;
+                  document.getElementById("id_nomeCompleto").value = data.nomeCompleto;
+                  document.getElementById("id_dataNascimento").value = data.dataNascimento;
+                  document.getElementById("id_code_NomeCompleto").value = data.code_nomeCompleto;
+               }
+              });
+            },
+            minLength: 1,
+         });
+
+         $('input.autocomplete_delete_paciente').autocomplete({
+           data: obj,
+           limit: 8,
+           onAutocomplete:function(val){
+             $.ajax({
+               url: '../get_dados_paciente/',
+               data: {
+                 'paciente_search': val
+               },
+               dataType: 'json',
+                  success: function(data){
+                  console.log(data);
+                  document.getElementById("id_cpf").value = data.cpf;
+                  document.getElementById("id_nomeCompleto").value = data.nomeCompleto;
+                  document.getElementById("id_code_NomeCompleto").value = data.code_nomeCompleto;
+               }
+              });
+            },
+            minLength: 1,
+         });
+
+         $('#id_cpf').mask('00000000000', {reverse: true});
+         $("#id_telefone").mask("(99) 9999-99999");
+
+
+      });
+
+
+
+   </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="navbar-fixed">
+  <nav class="blue-grey darken-4 z-depth-2">
+    <h5 class='center white-text' >Cadastre-se</h5>
+  </nav>
+</div>
+<br>
+<br class="col s12">
+  <form class="col s12" method="post">
+    {% csrf_token %}
+    <div class="form-container">
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Ex: usuario123" id="id_usuario" name="usuario" type="text" class="validate" data-length="10" required >
+          <label for="id_usuario">Usuário</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Ente com sua senha" id="id_senha" name="senha" type="password" class="validate" required {{ a_f }}>
+          <label for="id_senha">Senha</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Insira novamente sua senha" id="id_senha_confirma" name="senha_confirma" type="password" class="validate" required>
+          <label for="id_senha">Confirmar Senha</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Entre com email" id="id_email" name="email" type="email" class="validate" required>
+          <label for="id_senha">Email</label>
+        </div>
+      </div>
+    </div>
+    <center>
+      <button class="waves-effect waves-light btn z-depth-3 " type="submit" name="action">Cadastrar</button>
+      <br>
+    </center>
+  </form>
+</br>
+</br>
+</div>
+{% endblock %}

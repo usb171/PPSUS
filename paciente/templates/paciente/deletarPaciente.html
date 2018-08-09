@@ -1,0 +1,52 @@
+{% extends 'base_paciente.html' %}
+{% block body %}
+
+   <!--NavBar-->
+  <div class="navbar-fixed">
+    <nav class=" blue-grey darken-4 z-depth-2">
+      <div class="nav-wrapper">
+        <a href="#"class="brand-logo center">
+        <span id="header-large" class="text-logo"> Deletar Paciente </span>
+        <a href="#" data-activates="menu-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+  </div>
+  <ul class="side-nav" id="menu-mobile">
+    <li><a href="{% url 'index' %}">Home</a></li>
+    <li><a href="{% url 'novoPaciente' %}">Novo Paciente</a></li>
+   </ul>
+  <!--NavBar-->
+
+   <div class="row">
+     <form class="col s12 m12 l12"  acticon="{% url 'index' %}" method="POST">
+     {% csrf_token %}
+        <div class="row card-panel black-text">
+          <div class="input-field col s12 m12 l12">
+            <i class="material-icons prefix">search</i>
+            <input placeholder="" id="autocomplete-input" name="xx" type="text" class="autocomplete_delete_paciente" autofocus required>
+            <label for="autocomplete-input">BUSCAR: Nome ou CPF</label>
+          </div>
+        </div>
+        <div class="row card-panel black-text">
+          <div class="input-field col s12 m12 l12">
+          <i class="material-icons prefix">supervisor_account</i>
+          <input readonly placeholder="" id="id_nomeCompleto" name="nomeCompleto" type="text">
+          <label for="id_nomeCompleto" class="active">Nome Completo do Paciente</label>
+        </div>
+          <div class="input-field col s12 m12 l12">
+             <i class="material-icons prefix">credit_card</i>
+             <input readonly placeholder="" id="id_cpf" name="cpf" type="number">
+             <label for="id_telefone" data-error="Somente Números" data-success="OK">CPF</label>
+          </div>
+          <input placeholder="" id="id_code_NomeCompleto" type="hidden" name="code_nomeCompleto">
+        </div>
+        <div class="col s12 m12 l12 center">
+           <button type="submit" class="waves-effect waves-light btn-large blue-grey darken-2">Deletar</button>
+        </div>
+
+
+     </form>
+
+   </div>
+
+{% endblock %}

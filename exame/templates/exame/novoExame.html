@@ -1,0 +1,67 @@
+{% extends 'base_exame.html' %}
+{% block body %}
+
+  <div class="navbar-fixed">
+    <nav class=" blue-grey darken-4 z-depth-2">
+        <div class="nav-wrapper">
+          <a href="#"class="brand-logo center">
+              <span id="header-large" class="text-logo"> Exames </span>
+          <a href="#" data-activates="menu-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+  </div>
+  <ul class="side-nav" id="menu-mobile">
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'novaColeta' %}">Nova Coleta</a></li>
+  </ul>
+  <!--NavBar-->
+  <form class="col s12 m12 l12"  method="POST">
+    {% csrf_token %}
+    <div class="grey lighten-5">
+      </br>
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <div class="input-field col s12">
+             <i class="material-icons prefix">account_circle</i>
+             <input type="text" id="autocomplete-input" name="paciente" class="autocomplete" required>
+             <label for="autocomplete-input">BUSCAR: Nome ou CPF</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atenção! Essa div renderiza um input-field com o id do paciente -->
+      <div class="input-field col s12" id="div_id_paciente"> </div>
+      <!-- ############################################################## -->
+
+      <div class="row" id="id_lista_exames" hidden>
+        <div class="col s12 m12 l12">
+          <ul class="collapsible" data-collapsible="accordion">
+             {% for t_e in tipo_exames %}
+              <li>
+                <div class="collapsible-header" id="collapsible_header_{{t_e}}">
+                  <i class="material-icons">toc</i>
+                  {{ t_e }}
+                </div>
+                <div class="collapsible-body" >
+                  <div class="center" id="div_{{t_e}}"></div>
+                </div>
+              </li>
+             {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- <div class="row">
+        <div class="col s12 m12 l12 center">
+          <a class="waves-effect waves-light btn z-depth-3"  href="{% url 'novaColeta'%}" >Nova Coleta</a></br>
+        </div>
+      </div> -->
+
+    </br>
+  </br>
+</br>
+
+    </div>
+  </form>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base_tipoExame.html' %}
+{% block body %}
+
+  <div class="navbar-fixed">
+    <nav class=" blue-grey darken-4 z-depth-2">
+        <div class="nav-wrapper">
+          <a href="#"class="brand-logo center">
+              <span id="header-large" class="text-logo"> NovoTipoExame </span>
+          <a href="#" data-activates="menu-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+  </div>
+  <ul class="side-nav" id="menu-mobile">
+      <li><a href="{% url 'index' %}">Home</a></li>
+  </ul>
+  <!--NavBar-->
+   <div class="col s12">
+      <form class="col s12 m12 l12"  acticon="{% url 'index' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-container">
+
+           <div class="row">
+               <div class="input-field col s12 m12 l12">
+                  <i class="material-icons prefix">add_box</i>
+                  <input type="text" id="id_nome_exame" name="nomeExame" class="autocomplete" required>
+                  <label for="id_nome_exame">Nome do Tipo do Exame</label>
+                  {% if form.nomeExame.errors %}
+                  <blockquote>
+                  {{ form.nomeExame.errors }}
+                  </blockquote>
+                  {% endif %}
+               </div>
+           </div>
+
+        <center>
+          <button class="waves-effect waves-light btn z-depth-3 " type="submit" name="action">Salvar</button>
+          <br>
+        </center>
+
+      </form>
+   </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base_exame.html' %}
+{% block body %}
+
+  <div class="navbar-fixed">
+    <nav class=" blue-grey darken-4 z-depth-2">
+        <div class="nav-wrapper">
+          <a href="#"class="brand-logo center">
+              <span id="header-large" class="text-logo"> Editar Exame ID: {{id}}</span>
+          <a href="#" data-activates="menu-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+  </div>
+  <ul class="side-nav" id="menu-mobile">
+      <li><a href="{% url 'index' %}">Home</a></li>
+  </ul>
+  <!--NavBar-->
+  <div class="row">
+    <div class="card-panel white-text col s12 m12 l12">
+      <div class="section"/>
+      <div class="row">
+        <div class="input-field col s12 m6 l6">
+          <input disabled placeholder="" id="tipoExame" type="text" class="validate" value="{{fk_tipoExame}}">
+          <label for="tipoExame">Tipo do Exame</label>
+        </div>
+        <div class="input-field col s12 m6 l6">
+          <input disabled placeholder="" id="paciente" type="text" class="validate" value="{{fk_paciente}}">
+          <label for="paciente" >Nome do Paciente</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 m6 l6">
+          <input disabled placeholder="" id="dataCriacao" type="text" class="validate" value="{{dataCriacao}}">
+          <label for="dataCriacao">Data da Criação</label>
+        </div>
+        <div class="input-field col s12 m6 l6">
+          <input disabled placeholder="" id="riscoQueda" type="text" class="validate" value="{{riscoQueda}}">
+          <label for="riscoQueda">Risco de Queda</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 m12 l12">
+          <input disabled placeholder="" id="observacao" type="text" class="validate" value="{{observacao}}" autofocus>
+          <label for="observacao">Observação</label>
+        </div>
+      </div>
+      <form class = "col s12 m12 l12 row center" method="POST" id="id_form_editar_exame">
+        {% csrf_token %}
+          <input id="exame_coleta" name="exame_coleta" value="{{id}}" hidden>
+          <div class="switch"><label>Desativar Exame<input type="checkbox" name="flag_exame" checked>
+            <span class="lever"></span>Ativar Exame</label>
+          </div>
+          <div class="section"/>
+          <div class="section"/>
+          <div class="section"/>
+          <div class="section"/>
+          <div class="center">
+            <button class="btn waves-effect waves-light" type="submit" name="action">Salvar
+            </button>
+          </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+{% endblock %}
