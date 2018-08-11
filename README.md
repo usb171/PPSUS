@@ -14,6 +14,7 @@ $ virtualenv DEV_PYTHON // Criar um ambiente de desenvolvimento python
 
 $ source activate // Levantar o ambiente de desenvolvimento /bin/activate
 
-(DEV_PYTHON) $ pip install Django==2.0.7 // Instalar o Django 
+(DEV_PYTHON) $ pip install django==2.0.7 // Instalar o Django 
     
 (DEV_PYTHON) $ pip install paho-mqtt
+
