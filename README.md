@@ -117,3 +117,6 @@ Os avaliadores reduziram o tempo desse tipo de exame de 2 minutos para 1 minuto.
 # Exame_D
 Nenhuma coleta foi deletada. 
 
+# Exame_E
+A coleta ID 175 foi desativada pelo avaliador (VISIVEL 0). Essa coleta não deve ser utilizada mesmo não sendo deletada do banco.
+
