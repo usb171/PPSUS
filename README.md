@@ -102,4 +102,5 @@ Virar e olhar para trás sobre o ombro esquerdo. Repetir para o direito. O exam
 (0) Necessita assistência para evitar perda de equilíbrio ou queda</br>"
 
 
-
+# Observações no tratamento das coletas
+    Foram excluidos todos os pacientes com nome yasmine, teste e teste(OFF), uma vez que são pacientes criados com intuito de testes. Ao ser deletado esses pacientes, em cascata foram excluidos as suas devidas coletas. 
