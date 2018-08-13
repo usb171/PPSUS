@@ -147,5 +147,5 @@ Gera arquivos com as amostras dos exames.
     sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 2 and visivel = 1" > Exame_B.csv
     sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 3 and visivel = 1" > Exame_C.csv
     sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 4 and visivel = 1" > Exame_D.csv
-    sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 5 and visivel = 1" > Exame_Ecsv
+    sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 5 and visivel = 1" > Exame_E.csv
 
