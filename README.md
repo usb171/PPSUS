@@ -134,6 +134,7 @@ A coleta ID 175 foi desativada pelo avaliador (VISIVEL 0). Essa coleta não deve
 
 # Gerando arquivos .csv
 Gera arquivos com laudos do avaliador.
+   
     sqlite3 -csv db.sqlite3 "select paciente_id, riscoQueda from coleta_coleta where tipoExame_id = 1 and visivel = 1;" > Exame_A_R.csv
     sqlite3 -csv db.sqlite3 "select paciente_id, deslocamento, pontuacao from coleta_coleta where tipoExame_id = 2 and visivel = 1;" > Exame_B_R.csv
     sqlite3 -csv db.sqlite3 "select paciente_id, pontuacao from coleta_coleta where tipoExame_id = 3 and visivel = 1;" > Exame_C_R.csv
@@ -141,6 +142,7 @@ Gera arquivos com laudos do avaliador.
     sqlite3 -csv db.sqlite3 "select paciente_id, pontuacao from coleta_coleta where tipoExame_id = 5 and visivel = 1;" > Exame_E_R.csv
 
 Gera arquivos com as amostras dos exames.
+    
     sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 1 and visivel = 1" > Exame_A.csv
     sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 2 and visivel = 1" > Exame_B.csv
     sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 3 and visivel = 1" > Exame_C.csv
