@@ -113,7 +113,7 @@ Foram deletadas as coletas do ID 29 ao 37, do ID 55 ao 58 e do ID 78 ao 80. Não
 # Exame_B
 
     13/08/2018
-Coletas com IDs 39, 43, 65, 113, 118, 167, 199 não possuem DESLOCAMENTO. Essas coletas não foram exluidas pois houve preenchimento do campo PONTUAÇÂO. 
+Coletas com IDs 39, 43, 65, 113, 118, 167, 199 não possuem DESLOCAMENTO. Essas coletas foram exluidas pois houve preenchimento do campo PONTUAÇÂO. 
 
 # Exame_C
 
