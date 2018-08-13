@@ -23,24 +23,24 @@ $ source activate // Levantar o ambiente de desenvolvimento /bin/activate
 
 # Descrição dos Exames
 
-Exame A
+Exame A ID 1
 
-"TUG TESTE *</br></br>
+TUG TESTE *</br></br>
 
 levantar-se de uma cadeira, sem ajuda dos braços, andar a uma distância de três metros, dar a volta e retornar.</br>
 
 a) menos de 20 segundos para realização, correspondendo a baixo risco para quedas</br>
 b) de 20 a 29 segundos, a médio risco para quedas</br>
-c) 30 segundos ou mais, a alto risco para quedas.</br>"
+c) 30 segundos ou mais, a alto risco para quedas.</br>
 
 
 
 
 
 
-Exame B
+Exame B ID 2
 
-"* ALCANCE FUNCIONAL *</br></br>
+* ALCANCE FUNCIONAL *</br></br>
 
 Procedimento: O paciente em posição ortostática, membros inferiores levemente abduzidos, descalço, coluna o mais ereta possível, olhar para o horizonte, braços em extensão a 90° e hemicorpo direito próximo à parede. A partir dessa posição, solicitava-se ao avaliado esticar-se o máximo possível para frente. A excursão do braço desde o início até o final é medida por uma fita métrica fixada na parede no sentido horizontal ao lado do paciente, na altura do acrômio. Para a aferição, a extremidade do terceiro metacarpo pode ser utilizada como marcação de partida até o alcance máximo. </br>
 
@@ -48,35 +48,35 @@ Procedimento: O paciente em posição ortostática, membros inferiores levemente
 (3) Capaz de alcançar acima de 12,5cm (5 polegadas)</br>
 (2) Capaz de alcançar acima de 5cm (2 polegadas)</br>
 (1) Capaz de alcançar mas com necessidade de supervisão</br>
-(0) Perda de equilíbrio durante as tentativas / necessidade de suporte externo</br>"
+(0) Perda de equilíbrio durante as tentativas / necessidade de suporte externo</br>
 
 
 
 
 
 
-Exame C
+Exame C ID 3
 
 
 
-"* EM PÉ SEM APOIO *</br></br>
+* EM PÉ SEM APOIO *</br></br>
 
  Por favor, fique de pé por dois minutos sem se segurar em nada.</br>
 (4) Capaz de permanecer em pé com segurança por 2 minutos</br>
 (3) Capaz de permanecer em pé durante 2 minutos com supervisão</br>
 (2) Capaz de permanecer em pé durante 30 segundos sem suporte</br>
 (1) Necessidade de várias tentativas para permanecer 30 segundos sem suporte</br>
-(0) Incapaz de permanecer em pé por 30 segundos sem assistência</br>"
+(0) Incapaz de permanecer em pé por 30 segundos sem assistência</br>
 
 
 
 
 
 
-Exame D
+Exame D ID 4
 
 
-"* EM PÉ SEM SUPORTE COM OLHOS FECHADOS *</br></br>
+* EM PÉ SEM SUPORTE COM OLHOS FECHADOS *</br></br>
 
 Por favor, feche os olhos e permaneça parado por 10 segundos</br>
 
@@ -84,14 +84,14 @@ Por favor, feche os olhos e permaneça parado por 10 segundos</br>
 (3) Capaz de permanecer em pé com segurança por 10 segundos com supervisão</br>
 (2) Capaz de permanecer em pé durante 3 segundos</br>
 (1) Incapaz de manter os olhos fechados por 3 segundos mas permanecer em pé </br>
-(0) necessidade de ajuda para evitar queda</br>"
+(0) necessidade de ajuda para evitar queda</br>
 
 
 
-Exame E
+Exame E ID 5
 
 
-"*EM PÉ, VIRAR E OLHAR PARA TRÁS SOBRE OS OMBROS DIREITO E ESQUERDO*</br></br>
+*EM PÉ, VIRAR E OLHAR PARA TRÁS SOBRE OS OMBROS DIREITO E ESQUERDO*</br></br>
 
 Virar e olhar para trás sobre o ombro esquerdo. Repetir para o direito. O examinador pode pegar um objeto para olhar e colocá-lo atrás do sujeito para encorajá-lo a realizar o giro.</br>
 
@@ -99,7 +99,7 @@ Virar e olhar para trás sobre o ombro esquerdo. Repetir para o direito. O exam
 (3) Olha para trás por ambos por apenas um dos lados, o outro lado mostra menor mudança de peso</br>
 (2) Apenas vira para os dois lados mas mantém o equilíbrio</br>
 (1) Necessita de supervisão ao virar</br>
-(0) Necessita assistência para evitar perda de equilíbrio ou queda</br>"
+(0) Necessita assistência para evitar perda de equilíbrio ou queda</br>
 
 
 # Observações no tratamento das coletas
