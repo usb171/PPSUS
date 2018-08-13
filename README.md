@@ -130,3 +130,28 @@ Nenhuma coleta foi deletada.
     13/08/2018
 A coleta ID 175 foi desativada pelo avaliador (VISIVEL 0). Essa coleta não deve ser utilizada mesmo não sendo deletada do banco.
 
+
+
+# Gerando arquivos .csv
+
+sqlite3 -csv db.sqlite3 "select paciente_id, riscoQueda, deslocamento, pontuacao from coleta_coleta where tipoExame_id = 1;" > Exame_A_R.csv
+
+sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 1" > Exame_A.csv
+
+sqlite3 -csv db.sqlite3 "select paciente_id, riscoQueda, deslocamento, pontuacao from coleta_coleta where tipoExame_id = 2;" > Exame_B_R.csv
+
+sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 2" > Exame_B.csv
+
+sqlite3 -csv db.sqlite3 "select paciente_id, riscoQueda, deslocamento, pontuacao from coleta_coleta where tipoExame_id = 3;" > Exame_C_R.csv
+
+sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 3" > Exame_C.csv
+
+sqlite3 -csv db.sqlite3 "select paciente_id, riscoQueda, deslocamento, pontuacao from coleta_coleta where tipoExame_id = 4;" > Exame_D_R.csv
+
+sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 4" > Exame_D.csv
+
+sqlite3 -csv db.sqlite3 "select paciente_id, riscoQueda, deslocamento, pontuacao from coleta_coleta where tipoExame_id = 5;" > Exame_E_R.csv
+
+sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 5" > Exame_Ecsv
+
+
