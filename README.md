@@ -150,5 +150,5 @@ Gera arquivos com as amostras dos exames.
     sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 5 and visivel = 1" > Exame_E.csv
 
 # Link DropBox Bando de Dados
-Link aponta para uma contendo os arquivos csv, banco original e banco modificado
+Link aponta para uma pasta contendo os arquivos csv, banco original e banco modificado
     https://www.dropbox.com/sh/cjtklchoxsx9poe/AACVgxpszGh0nHB4ml6DblZ4a?dl=0
