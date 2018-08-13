@@ -152,3 +152,7 @@ Gera arquivos com as amostras dos exames.
 # Link DropBox Bando de Dados
 Link aponta para uma pasta contendo os arquivos csv, banco original e banco modificado
     https://www.dropbox.com/sh/cjtklchoxsx9poe/AACVgxpszGh0nHB4ml6DblZ4a?dl=0
+    
+# Como tirar as ASPAS do .csv
+
+https://www.youtube.com/watch?v=_yM6ty5PKnA&feature=youtu.be
