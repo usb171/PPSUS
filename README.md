@@ -108,7 +108,7 @@ Foram excluidos todos os pacientes com nome yasmine, teste e teste(OFF), uma vez
 # Exame_A
 
     13/08/2018
-Foram deletadas as coletas do ID 29 ao 37 e do ID 55 ao 58. Não foram colocados o risco de queda.
+Foram deletadas as coletas do ID 29 ao 37, do ID 55 ao 58 e do ID 78 ao 80. Não foram colocados o risco de queda.
 
 # Exame_B
 
