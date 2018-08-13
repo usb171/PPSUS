@@ -107,26 +107,26 @@ Foram excluidos todos os pacientes com nome yasmine, teste e teste(OFF), uma vez
 
 # Exame_A
 
-13/08/2018
+    13/08/2018
 Foram deletadas as coletas do ID 29 ao 37 e do ID 55 ao 58. Não foram colocados o risco de queda.
 
 # Exame_B
 
-13/08/2018
+    13/08/2018
 Coletas com IDs 39, 43, 65, 113, 118, 167, 199 não possuem DESLOCAMENTO. Essas coletas não foram exluidas pois houve preenchimento do campo PONTUAÇÂO. 
 
 # Exame_C
 
-13/08/2018
+    13/08/2018
 Os avaliadores reduziram o tempo desse tipo de exame de 2 minutos para 1 minuto. A coleta ID 47 foi excluída pois entra em contradição dos valores dos campos CRONOMETRO e PONTUAÇÂO. 
 
 # Exame_D
 
-13/08/2018
+    13/08/2018
 Nenhuma coleta foi deletada. 
 
 # Exame_E
 
-13/08/2018
+    13/08/2018
 A coleta ID 175 foi desativada pelo avaliador (VISIVEL 0). Essa coleta não deve ser utilizada mesmo não sendo deletada do banco.
 
