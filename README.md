@@ -152,6 +152,10 @@ Gera arquivos com as amostras dos exames.
 # Link DropBox Bando de Dados
 Link aponta para uma pasta contendo os arquivos csv, banco original e banco modificado
     https://www.dropbox.com/sh/cjtklchoxsx9poe/AACVgxpszGh0nHB4ml6DblZ4a?dl=0
+
+# Link DropBox para as coletas processadas 
+Link aponta para uma pasta contendo um arquivo .txt para ser analisado com o Matlab. Esse arquivo foi gerado pelo script em python encontrado dentro da pasta. 
+    https://www.dropbox.com/s/7q6t3j3b9qorwyn/coletas.txt?dl=0
     
 # Como tirar as ASPAS do .csv
 
