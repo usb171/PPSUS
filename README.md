@@ -146,3 +146,7 @@ A coleta ID 175 foi desativada pelo avaliador (VISIVEL 0). Essa coleta não deve
 Nenhuma coleta foi deletada.
 
 
+# Link Dropbox com os bancos e coletas processadas
+
+https://www.dropbox.com/sh/170pyclkbe187ef/AAAa85fNd-Bdo61AB2BezsWoa?dl=0
+
