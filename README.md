@@ -164,14 +164,3 @@ Gera arquivos com as amostras dos exames.
     sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 4 and visivel = 1" > Exame_D.csv
     sqlite3 -csv db.sqlite3 "select paciente_id, amostras from coleta_coleta where tipoExame_id = 5 and visivel = 1" > Exame_E.csv
 
-# Link DropBox Bando de Dados
-Link aponta para uma pasta contendo os arquivos csv, banco original e banco modificado
-    https://www.dropbox.com/sh/cjtklchoxsx9poe/AACVgxpszGh0nHB4ml6DblZ4a?dl=0
-
-# Link DropBox para as coletas processadas 
-Link aponta para uma pasta contendo um arquivo .txt para ser analisado com o Matlab. Esse arquivo foi gerado pelo script em python encontrado dentro da pasta. 
-    https://www.dropbox.com/s/7q6t3j3b9qorwyn/coletas.txt?dl=0
-    
-# Como tirar as ASPAS do .csv
-
-https://www.youtube.com/watch?v=_yM6ty5PKnA&feature=youtu.be
